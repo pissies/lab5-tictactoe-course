@@ -2,13 +2,11 @@
 
 namespace ttt::my_player {
 
-std::vector<Point> get_candidates(const State& state,
-		const int radius) {
-//TODO: реализовать.
-(void)state;
-(void)radius;
-return {};
-
+PointBuffer get_candidates(const State &state, const int radius) {
+  // TODO: реализовать.
+  (void)radius;
+  const int max_candidates = state.get_opts().rows * state.get_opts().cols;
+  return PointBuffer(max_candidates);
 }
 
-} // namespace ttt:my_player
+} // namespace ttt::my_player
