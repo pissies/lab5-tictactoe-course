@@ -1,9 +1,7 @@
 #pragma once
 
-#include <vector>
-#include <set>
-
 #include "core/game.hpp"
+#include "point_buffer.hpp"
 
 namespace ttt::my_player {
 
@@ -19,7 +17,7 @@ const int kCandidateRadius = 2;
 // -> в игре идет первый ход: выбрать единственного кандидата, ближайшую
 // к центру незанятую (нет препятствий) клетку.
 
-std::vector<Point> get_candidates(const State& state,
-		const int radius = kCandidateRadius);
+PointBuffer get_candidates(const State &state,
+                            const int radius = kCandidateRadius);
 
-} // namespace ttt:my_player
+} // namespace ttt::my_player
