@@ -7,6 +7,7 @@ namespace ttt::my_player {
 
 using game::Point;
 using game::State;
+using game::Sign;
 
 // радиус поиска кандидатов (шаг 1 в algorithm.md)
 const int kCandidateRadius = 2;
