@@ -1,14 +1,33 @@
 #include "threats.hpp"
+#include "line_utils.hpp"
 
 namespace ttt::my_player {
 
+namespace {
+
+const Direction kAllDirections[] = {Direction::HORIZONTAL, Direction::VERTICAL,
+                                     Direction::DIAG_MAIN, Direction::DIAG_ANTI};
+
+} // namespace
+
+// Реализует шаг 2 алгоритма (поиск немедленной победы) для символа sign.
+// Та же функция используется и для шага 3 (блокировка): вызывающий код
+// передаёт sign = символ соперника T, чтобы найти клетку, которая дала бы
+// сопернику победу, а затем сам решает поставить туда свой символ S.
 bool find_winning_move(const State &state, const PointBuffer &candidates,
                         Sign sign, Point &out) {
-  // TODO: реализовать
-  (void)state;
-  (void)candidates;
-  (void)sign;
-  (void)out;
+  const int win_len = state.get_opts().win_len;
+
+  for (int i = 0; i < candidates.size(); ++i) {
+    const Point &p = candidates[i];
+    for (const Direction dir : kAllDirections) {
+      const LineInfo info = get_line_info(state, p.x, p.y, dir, sign);
+      if (info.length >= win_len) {
+        out = p;
+        return true;
+      }
+    }
+  }
   return false;
 }
 
