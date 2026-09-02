@@ -27,4 +27,12 @@ struct LineInfo {
 LineInfo get_line_info(const State &state, int x, int y, Direction dir,
                         Sign sign);
 
+// то же самое, что get_line_info, но дополнительно считает клетку
+// virtual_cell гипотетически занятой sign, даже если на реальном поле она
+// пустая. Нужно шагам 4-5, чтобы проверять клетки-угрозы уже после
+// гипотетического хода в другую клетку p, не мутируя state.
+LineInfo get_line_info_virtual(const State &state, int x, int y, Direction dir,
+                                Sign sign, Point virtual_cell);
+
+
 } // namespace ttt::my_player
