@@ -45,7 +45,13 @@ LineInfo count_line(const State &state, int x, int y, Direction dir, Sign sign,
   const Offset off = direction_offset(dir);
 
   int length = 1;
+  int open_ends = 0;
 
+  // положительная сторона: идём, пока встречаем sign; клетка, на которой
+  // остановились (px, py) — первая за концом линии. Конец открыт, если эта
+  // клетка пустая и в пределах поля (за пределами поля read_cell вернёт
+  // Sign::WALL, что не равно Sign::NONE, поэтому отдельная проверка границ
+  // не нужна).
   int px = x + off.dx;
   int py = y + off.dy;
   while (read_cell(state, px, py, has_virtual, virtual_cell, virtual_sign) ==
@@ -54,7 +60,12 @@ LineInfo count_line(const State &state, int x, int y, Direction dir, Sign sign,
     px += off.dx;
     py += off.dy;
   }
+  if (read_cell(state, px, py, has_virtual, virtual_cell, virtual_sign) ==
+      Sign::NONE) {
+    ++open_ends;
+  }
 
+  // отрицательная сторона, аналогично
   int nx = x - off.dx;
   int ny = y - off.dy;
   while (read_cell(state, nx, ny, has_virtual, virtual_cell, virtual_sign) ==
@@ -63,9 +74,12 @@ LineInfo count_line(const State &state, int x, int y, Direction dir, Sign sign,
     nx -= off.dx;
     ny -= off.dy;
   }
+  if (read_cell(state, nx, ny, has_virtual, virtual_cell, virtual_sign) ==
+      Sign::NONE) {
+    ++open_ends;
+  }
 
-  // open_ends: TODO, потребуется для шага 6
-  return LineInfo{length, 0};
+  return LineInfo{length, open_ends};
 }
 
 } // namespace
