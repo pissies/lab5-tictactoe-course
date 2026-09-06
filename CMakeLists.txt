@@ -46,10 +46,7 @@ endif()
 include_directories(src)
 
 # NOTE: add source files for your players here
-set(player_src src/player/my_player.cpp src/player/my_observer.cpp
-src/player/candidates.cpp src/player/line_utils.cpp
-src/player/evaluation.cpp src/player/lookahead.cpp
-src/player/threats.cpp)
+set(player_src src/player/my_player.cpp src/player/my_observer.cpp)
 add_library(tttplayer STATIC ${player_src})
 target_link_libraries(tttplayer ${TTTCORE_LIB})
 
