@@ -2,6 +2,13 @@
 
 #include "core/game.hpp"
 
+#include "candidates.hpp"
+#include "evaluation.hpp"
+#include "line_utils.hpp"
+#include "lookahead.hpp"
+#include "threats.hpp"
+
+
 namespace ttt::my_player {
 
 using game::Event;
