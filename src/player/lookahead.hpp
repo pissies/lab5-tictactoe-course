@@ -1,8 +1,13 @@
 #pragma once
 
 #include "core/game.hpp"
+#include "point_buffer.hpp"
 
 namespace ttt::my_player {
+
+using game::Point;
+using game::Sign;
+using game::State;
 
 struct ScoredCandidate {
   game::Point point;
@@ -62,11 +67,15 @@ const int kLookaheadTopK = 10;
 // следующем ходу; если да, то оценка штрафуется.
 // Возвращает скорректированный список кандидатов (той же ёмкости, что и
 // top_candidates).
-//
-// TODO: реализовать.
 ScoredCandidateBuffer
-apply_lookahead(const game::State &state,
+apply_lookahead(const State &state,
                  const ScoredCandidateBuffer &top_candidates,
-                 game::Sign own_sign, game::Sign opp_sign);
+                 Sign own_sign, Sign opp_sign);
+
+// шаг 8: находит клетку с максимальной итоговой оценкой среди candidates.
+// Если таких клеток несколько, выбирает одну из них случайно, равновероятно.
+// candidates не должен быть пустым (список кандидатов из шага 1 не пуст,
+// пока на поле есть хотя бы одна свободная клетка).
+Point select_best_move(const ScoredCandidateBuffer &candidates);
 
 } // namespace ttt::my_player
